@@ -1,0 +1,22 @@
+name: gists_explorer
+description: Gists Explorer parser
+version: 0.0.1
+author:
+homepage:
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  http: ^0.13.0
+  html: ^0.15.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:

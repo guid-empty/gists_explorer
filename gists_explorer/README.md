@@ -6,7 +6,7 @@
 
 - [ ] Получить список gists на поисковое выражение
 - [ ] Получить информацию по конкретному gist используя API
-
+- [ ] Сделать переход по авторам (не поиском, а получить список gists по указанному URL)
 
 ## Поисковый запрос с использованием специальных тегов
 
@@ -23,7 +23,7 @@ curl \
   
 
 https://docs.github.com/en/rest/reference/gists#authentication
->> The Gist API provides up to one megabyte of content for each file in the gist. Each file returned for a gist through the API has a key called truncated. If truncated is true, the file is too large and only a portion of the contents were returned in content
+> The Gist API provides up to one megabyte of content for each file in the gist. Each file returned for a gist through the API has a key called truncated. If truncated is true, the file is too large and only a portion of the contents were returned in content
 >
 >
 
@@ -35,4 +35,9 @@ https://docs.github.com/en/github/searching-for-information-on-github/searching-
 поиск с первой страницы
 
 https://gist.github.com/search?q=language%3Adart+solution.txt&p=1
+
+
+## Сделать переход по авторам (не поиском, а получить список gists по указанному URL)
+
+![image](https://user-images.githubusercontent.com/17752828/111225939-7dda4080-85f1-11eb-9dda-e1ba5257a774.png)
 

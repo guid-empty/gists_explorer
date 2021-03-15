@@ -30,5 +30,4 @@ Future initiate() async {
     print(count);
   }
 
-  print(gistsCountElement);
 }

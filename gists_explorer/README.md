@@ -1,14 +1,21 @@
 # gists_explorer
 
-Gists Explorer parser
+## Gists Explorer parser
 
-## Getting Started
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+- [ ] Получить список gists на поисковое выражение
+- [ ] Получить информацию по конкретному gist используя API
+
+
+## Поисковый запрос с использованием специальных тегов
+
+language:dart
+https://gist.github.com/search?q=language%3Adart+solution.txt&ref=searchresults
+
+
+## Использование API на примере
+
+curl \
+  -H "Accept: application/vnd.github.v3+json" \
+  https://api.github.com/gists/db904ce7cf1fa7602bb5c519ab05d8f2|jora -p

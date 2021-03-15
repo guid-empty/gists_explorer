@@ -1,9 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:html/dom.dart';
+import 'package:gists_explorer/src/models/code_line.dart';
+import 'package:gists_explorer/src/models/gist_declaration.dart';
 import 'package:html/parser.dart';
-import 'package:http/http.dart';
 
 void main(List<String> arguments) async {
   await initiate();
@@ -38,6 +37,7 @@ Future initiate() async {
     print(pages);
   }
 
+  final List<GistDeclaration> gists = [];
   final snippetElements = document.querySelectorAll('div.gist-snippet');
   for (final snippetElement in snippetElements) {
     ///
@@ -47,11 +47,12 @@ Future initiate() async {
     final authorElement = metaElement.querySelector(
         'div > div.px-lg-2 > span > a[data-hovercard-type=\'user\']');
     final author = authorElement.text.trim();
-    final avatarUrl = metaElement.querySelector('img.avatar-user').attributes['src'];
+    final avatarUrl =
+        metaElement.querySelector('img.avatar-user').attributes['src'];
     final fileNameElement =
         metaElement.querySelector('strong.css-truncate-target');
     final fileName = fileNameElement.text.trim();
-    final gistId = fileNameElement.parent.attributes['href'];
+    final gistId = fileNameElement.parent.attributes['href'].split('/').last;
     final timeAgo = metaElement.querySelector('time-ago').text.trim();
     final tagElements =
         metaElement.querySelectorAll('ul > li.d-inline-block > a.Link--muted');
@@ -79,13 +80,38 @@ Future initiate() async {
     ///
     /// file-box
     ///
+    final List<CodeLine> codeLines = [];
     final fileBoxElement = snippetElement.querySelector('div.file-box');
     final codeTableRowElements = fileBoxElement
         .querySelectorAll('table.js-file-line-container > tbody > tr');
     for (final trElement in codeTableRowElements) {
-      final lineNumber = trElement.getElementsByTagName('td').first.attributes['data-line-number'];
+      final lineNumber = int.tryParse(
+        trElement
+            .getElementsByTagName('td')
+            .first
+            .attributes['data-line-number'],
+      );
       final codeLine = trElement.getElementsByTagName('td').last.text.trim();
+      codeLines.add(CodeLine(lineNumber: lineNumber, loc: codeLine));
       print('$lineNumber  $codeLine');
     }
+
+    gists.add(
+      GistDeclaration(
+        author: author,
+        avatarUrl: avatarUrl,
+        fileName: fileName,
+        gistId: gistId,
+        timeAgo: timeAgo,
+        gistName: gistName,
+        filesCount: filesCount,
+        forksCount: forksCount,
+        commentsCount: commentsCount,
+        starsCount: starsCount,
+        preview: codeLines,
+      ),
+    );
   }
+
+  print(gists.length);
 }

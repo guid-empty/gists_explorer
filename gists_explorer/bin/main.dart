@@ -1,21 +1,30 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:gists_explorer/src/models/code_line.dart';
 import 'package:gists_explorer/src/models/gist_declaration.dart';
 import 'package:html/parser.dart';
 
 void main(List<String> arguments) async {
-  await initiate();
+  final body = File(
+          '/Users/andreysmirnov/projects/gists_explorer/gists_explorer/assets/search_results.html')
+      .readAsStringSync();
+
+  const uri = 'https://gist.github.com/search';
+  final response = await Dio().get(
+    uri,
+    queryParameters: {
+      'q': 'language:dart',
+      'p': 100,
+    },
+  );
+  await initiate(response.data.toString());
 }
 
 String clearText(String source) =>
     source != null ? source.trim().replaceAll('\\n', '') : source;
 
-Future initiate() async {
-  final body = File(
-          '/Users/andreysmirnov/projects/gists_explorer/gists_explorer/assets/search_results.html')
-      .readAsStringSync();
-
+Future initiate(String body) async {
   final document = parse(body);
   final gistsCountElement =
       document.querySelector('div.col-8 > div.pb-3 > h3 > div.d-flex >h3');

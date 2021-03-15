@@ -30,4 +30,10 @@ Future initiate() async {
     print(count);
   }
 
+  final currentPagesCountElement = document.querySelector('div[role=\'navigation\'] > em[data-total-pages]');
+  if (currentPagesCountElement != null) {
+    final pages = int.tryParse(currentPagesCountElement.attributes['data-total-pages']);
+    print(pages);
+  }
+
 }

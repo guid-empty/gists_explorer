@@ -1,15 +1,11 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:gists_explorer/src/models/code_line.dart';
 import 'package:gists_explorer/src/models/gist_declaration.dart';
+import 'package:gists_explorer/src/services/gists_api.dart';
+import 'package:gists_explorer/src/services/requests/search_request.dart';
 import 'package:html/parser.dart';
 
 void main(List<String> arguments) async {
-  final body = File(
-          '/Users/andreysmirnov/projects/gists_explorer/gists_explorer/assets/search_results.html')
-      .readAsStringSync();
-
   const uri = 'https://gist.github.com/search';
   final response = await Dio().get(
     uri,
@@ -19,6 +15,16 @@ void main(List<String> arguments) async {
     },
   );
   await initiate(response.data.toString());
+
+  final api = GistsApi();
+  final apiResponse = await api.search(
+    SearchRequest(
+      currentPage: 0,
+      language: 'C#',
+    ),
+  );
+
+  print(apiResponse);
 }
 
 String clearText(String source) =>
@@ -40,10 +46,12 @@ Future initiate(String body) async {
 
   final currentPagesCountElement =
       document.querySelector('div[role=\'navigation\'] > em[data-total-pages]');
+  var currentPage = 0;
   if (currentPagesCountElement != null) {
     final pages =
         int.tryParse(currentPagesCountElement.attributes['data-total-pages']);
     print(pages);
+    currentPage = int.tryParse(currentPagesCountElement.text.trim());
   }
 
   final List<GistDeclaration> gists = [];

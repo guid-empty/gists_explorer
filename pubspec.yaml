@@ -17,4 +17,11 @@ dependencies:
   meta: ^1.3.0
   infinite_scroll_pagination: ^3.0.1
 
+dev_dependencies:
+  test: any
+  flutter_test:
+    sdk: flutter
+
 flutter:
+  assets:
+    - assets/response.html

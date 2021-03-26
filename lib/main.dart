@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gists_explorer/src/models/gist_declaration.dart';
 import 'package:gists_explorer/src/services/gists_api.dart';
 import 'package:gists_explorer/src/services/requests/search_request.dart';
@@ -39,7 +40,7 @@ class _GistListViewState extends State<GistListView> {
       child: PagedListView.separated(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<GistDeclaration>(
-          itemBuilder: (context, gist, index) => Row(
+          itemBuilder: (context, GistDeclaration gist, index) => Row(
             children: [
               if (gist.avatarUrl?.isNotEmpty ?? false)
                 CircleAvatar(
@@ -53,8 +54,9 @@ class _GistListViewState extends State<GistListView> {
           ),
         ),
         padding: const EdgeInsets.all(16),
-        separatorBuilder: (context, index) => const SizedBox(
-          height: 16,
+        separatorBuilder: (context, index) => Divider(
+          height: 8,
+          thickness: 1,
         ),
       ),
     );

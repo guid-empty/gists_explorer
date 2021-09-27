@@ -9,8 +9,7 @@ class App extends StatelessWidget {
     final mediaQueryData = MediaQueryData.fromWindow(
       WidgetsBinding.instance!.window,
     );
-    const brightness = Brightness.dark; // ?? mediaQueryData.platformBrightness;
-
+    final brightness = mediaQueryData.platformBrightness;
     AppTheme.configure(mediaQueryData: mediaQueryData);
     final initialTheme = brightness == Brightness.dark
         ? AppTheme.darkTheme

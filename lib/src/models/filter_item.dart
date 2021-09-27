@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+
 
 class FilterItem {
   final String language;
   final String count;
 
   FilterItem({
-    @required this.language,
-    @required this.count,
+    required this.language,
+    required this.count,
   });
 
   @override

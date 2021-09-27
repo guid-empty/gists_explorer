@@ -2,233 +2,214 @@ import 'dart:ui' as ui show Shadow, FontFeature;
 
 import 'package:flutter/material.dart';
 import 'package:gists_explorer/src/common/theme/app_theme_color_scheme.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppTextTheme extends TextTheme {
-  final AppThemeTextStyle subtitle1R;
-  final AppThemeTextStyle subtitle1M;
-  final AppThemeTextStyle caption1R;
-  final AppThemeTextStyle caption1M;
-  final AppThemeTextStyle headline4light;
+  final AppThemeTextStyle bodyTextCaption;
+  final AppThemeTextStyle bodyTextSubtitle;
+  final AppThemeTextStyle bodyTextLargeBold;
+  final AppThemeTextStyle bodyTextBaseSemibold;
+  final AppThemeTextStyle bodyTextSmallBold;
+  final AppThemeTextStyle bodyTextSmallSemibold;
+  final AppThemeTextStyle bodyTextHelper;
+  final AppThemeTextStyle buttonBase;
+  final AppThemeTextStyle buttonSmall;
+  final AppThemeTextStyle inputBase;
+  final AppThemeTextStyle navigationBarBase;
 
-  @override
-  final AppThemeTextStyle headline1;
-  @override
-  final AppThemeTextStyle headline2;
-  @override
-  final AppThemeTextStyle headline3;
-  @override
-  final AppThemeTextStyle headline4;
-  @override
-  final AppThemeTextStyle headline5;
-  @override
-  final AppThemeTextStyle headline6;
-  @override
-  final AppThemeTextStyle subtitle2;
-  @override
-  final AppThemeTextStyle bodyText1;
-  @override
-  final AppThemeTextStyle bodyText2;
-  @override
-  final AppThemeTextStyle button;
-  @override
-  final AppThemeTextStyle overline;
+  final AppThemeTextStyle _headline1;
+  final AppThemeTextStyle _headline2;
+  final AppThemeTextStyle _headline3;
+  final AppThemeTextStyle _headline4;
 
   const AppTextTheme({
-    this.subtitle1R,
-    this.subtitle1M,
-    this.caption1R,
-    this.caption1M,
-    this.headline1,
-    this.headline2,
-    this.headline3,
-    this.headline4,
-    this.headline4light,
-    this.headline5,
-    this.headline6,
-    this.subtitle2,
-    this.bodyText1,
-    this.bodyText2,
-    this.button,
-    this.overline,
-  }) : super(
+    required AppThemeTextStyle headline1,
+    required AppThemeTextStyle headline2,
+    required AppThemeTextStyle headline3,
+    required AppThemeTextStyle headline4,
+    required this.bodyTextSubtitle,
+    required this.bodyTextLargeBold,
+    required this.bodyTextBaseSemibold,
+    required this.bodyTextSmallBold,
+    required this.bodyTextSmallSemibold,
+    required this.bodyTextHelper,
+    required this.bodyTextCaption,
+    required this.buttonBase,
+    required this.buttonSmall,
+    required this.inputBase,
+    required this.navigationBarBase,
+  })  : _headline1 = headline1,
+        _headline2 = headline2,
+        _headline3 = headline3,
+        _headline4 = headline4,
+        super(
           headline1: headline1,
           headline2: headline2,
           headline3: headline3,
           headline4: headline4,
-          headline5: headline5,
-          headline6: headline6,
-          subtitle1: subtitle1R,
-          subtitle2: subtitle2,
-          bodyText1: bodyText1,
-          bodyText2: bodyText2,
-          caption: caption1R,
-          button: button,
-          overline: overline,
+          subtitle1: bodyTextSubtitle,
+          subtitle2: bodyTextSubtitle,
+          caption: bodyTextCaption,
+          button: buttonBase,
         );
-
   factory AppTextTheme.byColorScheme(
     AppThemeColorScheme colorScheme,
-  ) =>
-      AppTextTheme(
-        headline1: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w300,
-            fontStyle: FontStyle.normal,
-            fontSize: 96,
-            height: 112 / 96,
-            letterSpacing: -1.5,
-          ),
+  ) {
+    return AppTextTheme(
+      headline1: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.normal,
+          fontSize: 28,
+          height: 32 / 28,
         ),
-        headline2: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w300,
-            fontStyle: FontStyle.normal,
-            fontSize: 60,
-            height: 72 / 60,
-            letterSpacing: -.5,
-          ),
+      ),
+      headline2: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.normal,
+          fontSize: 26,
+          height: 32 / 26,
         ),
-        headline3: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w400,
-            fontStyle: FontStyle.normal,
-            fontSize: 48,
-            height: 56 / 48,
-          ),
+      ),
+      headline3: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.normal,
+          fontSize: 24,
+          height: 28 / 24,
         ),
-        headline4: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w400,
-            fontStyle: FontStyle.normal,
-            fontSize: 34,
-            height: 36 / 34,
-          ),
+      ),
+      headline4: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          fontSize: 20,
+          height: 24 / 20,
         ),
-        headline4light: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w300,
-            fontStyle: FontStyle.normal,
-            fontSize: 34,
-            height: 36 / 34,
-          ),
+      ),
+      bodyTextSubtitle: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          fontSize: 14,
+          height: 16 / 14,
         ),
-        headline5: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w400,
-            fontStyle: FontStyle.normal,
-            fontSize: 24,
-            height: 1,
-            letterSpacing: .18,
-          ),
+      ),
+      bodyTextLargeBold: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.normal,
+          fontSize: 16,
+          height: 18 / 16,
         ),
-        headline6: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w500,
-            fontStyle: FontStyle.normal,
-            fontSize: 20,
-            height: 24 / 20,
-            letterSpacing: .15,
-          ),
+      ),
+      bodyTextBaseSemibold: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          fontSize: 14,
+          height: 16 / 14,
         ),
-        subtitle1R: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w400,
-            fontStyle: FontStyle.normal,
-            fontSize: 16,
-            height: 24 / 16,
-            letterSpacing: .15,
-          ),
+      ),
+      bodyTextSmallBold: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.normal,
+          fontSize: 12,
+          height: 18 / 12,
         ),
-        subtitle1M: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w500,
-            fontStyle: FontStyle.normal,
-            fontSize: 16,
-            height: 24 / 16,
-            letterSpacing: .15,
-          ),
+      ),
+      bodyTextSmallSemibold: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          fontSize: 12,
+          height: 18 / 12,
         ),
-        subtitle2: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w500,
-            fontStyle: FontStyle.normal,
-            fontSize: 14,
-            height: 24 / 14,
-            letterSpacing: .1,
-          ),
+      ),
+      bodyTextHelper: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          fontSize: 12,
+          height: 18 / 12,
         ),
-        bodyText1: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w400,
-            fontStyle: FontStyle.normal,
-            fontSize: 16,
-            height: 24 / 16,
-            letterSpacing: .5,
-          ),
+      ),
+      bodyTextCaption: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          fontSize: 10,
+          height: 12 / 10,
         ),
-        bodyText2: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w400,
-            fontStyle: FontStyle.normal,
-            fontSize: 14,
-            height: 20 / 14,
-            letterSpacing: .25,
-          ),
+      ),
+      buttonBase: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.normal,
+          fontSize: 16,
+          height: 18 / 16,
         ),
-        button: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w500,
-            fontStyle: FontStyle.normal,
-            fontSize: 14,
-            height: 16 / 14,
-            letterSpacing: 1.25,
-          ),
+      ),
+      buttonSmall: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.normal,
+          fontSize: 12,
+          height: 18 / 12,
         ),
-        caption1R: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w400,
-            fontStyle: FontStyle.normal,
-            fontSize: 12,
-            height: 16 / 12,
-            letterSpacing: .4,
-          ),
+      ),
+      inputBase: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.normal,
+          fontSize: 16,
+          height: 18 / 16,
         ),
-        caption1M: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w500,
-            fontStyle: FontStyle.normal,
-            fontSize: 12,
-            height: 16 / 12,
-            letterSpacing: .4,
-          ),
+      ),
+      navigationBarBase: AppThemeTextStyle(colorScheme).merge(
+        const TextStyle(
+          fontFamily: 'Averta',
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          fontSize: 14,
+          height: 16 / 14,
         ),
-        overline: AppThemeTextStyle(colorScheme).merge(
-          GoogleFonts.roboto(
-            color: colorScheme.onSurfaceHighEmphasis,
-            fontWeight: FontWeight.w500,
-            fontStyle: FontStyle.normal,
-            fontSize: 10,
-            height: 16 / 10,
-            letterSpacing: 1.5,
-          ),
-        ),
-      );
+      ),
+    );
+  }
+  @override
+  AppThemeTextStyle get bodyText1 => bodyTextLargeBold;
+  @override
+  AppThemeTextStyle get bodyText2 => bodyTextLargeBold;
+  @override
+  AppThemeTextStyle get headline1 => _headline1;
+  @override
+  AppThemeTextStyle get headline2 => _headline2;
+  @override
+  AppThemeTextStyle get headline3 => _headline3;
+  @override
+  AppThemeTextStyle get headline4 => _headline4;
+  @override
+  AppThemeTextStyle get headline5 => headline4;
+  @override
+  AppThemeTextStyle get headline6 => headline4;
+  @override
+  AppThemeTextStyle get overline => bodyTextHelper;
 }
 
 class AppThemeTextStyle extends TextStyle {
@@ -237,27 +218,28 @@ class AppThemeTextStyle extends TextStyle {
   const AppThemeTextStyle(
     this.colorScheme, {
     bool inherit = true,
-    Color color,
-    Color backgroundColor,
-    String fontFamily,
-    List<String> fontFamilyFallback,
-    double fontSize,
-    FontWeight fontWeight,
-    FontStyle fontStyle,
-    double letterSpacing,
-    double wordSpacing,
-    TextBaseline textBaseline,
-    double height,
-    Locale locale,
-    Paint foreground,
-    Paint background,
-    TextDecoration decoration,
-    Color decorationColor,
-    TextDecorationStyle decorationStyle,
-    double decorationThickness,
-    String debugLabel,
-    List<ui.Shadow> shadows,
-    List<ui.FontFeature> fontFeatures,
+    Color? color,
+    Color? backgroundColor,
+    String? fontFamily,
+    List<String>? fontFamilyFallback,
+    double? fontSize,
+    FontWeight? fontWeight,
+    FontStyle? fontStyle,
+    double? letterSpacing,
+    double? wordSpacing,
+    TextBaseline? textBaseline,
+    double? height,
+    Locale? locale,
+    Paint? foreground,
+    Paint? background,
+    TextDecoration? decoration,
+    Color? decorationColor,
+    TextDecorationStyle? decorationStyle,
+    double? decorationThickness,
+    String? debugLabel,
+    List<ui.Shadow>? shadows,
+    List<ui.FontFeature>? fontFeatures,
+    TextOverflow? overflow,
   }) : super(
           inherit: inherit,
           color: color,
@@ -281,36 +263,35 @@ class AppThemeTextStyle extends TextStyle {
           debugLabel: debugLabel,
           shadows: shadows,
           fontFeatures: fontFeatures,
+          overflow: overflow,
         );
 
-  ///
-  /// Some problems with font weight are described here
-  /// https://github.com/material-foundation/google-fonts-flutter/issues/141
-  ///
   @override
   AppThemeTextStyle copyWith({
-    bool inherit = true,
-    Color color,
-    Color backgroundColor,
-    String fontFamily,
-    List<String> fontFamilyFallback,
-    double fontSize,
-    FontWeight fontWeight,
-    FontStyle fontStyle,
-    double letterSpacing,
-    double wordSpacing,
-    TextBaseline textBaseline,
-    double height,
-    Locale locale,
-    Paint foreground,
-    Paint background,
-    List<ui.Shadow> shadows,
-    List<ui.FontFeature> fontFeatures,
-    TextDecoration decoration,
-    Color decorationColor,
-    TextDecorationStyle decorationStyle,
-    double decorationThickness,
-    String debugLabel,
+    bool? inherit,
+    Color? color,
+    Color? backgroundColor,
+    String? fontFamily,
+    List<String>? fontFamilyFallback,
+    double? fontSize,
+    FontWeight? fontWeight,
+    FontStyle? fontStyle,
+    double? letterSpacing,
+    double? wordSpacing,
+    TextBaseline? textBaseline,
+    double? height,
+    TextLeadingDistribution? leadingDistribution,
+    Locale? locale,
+    Paint? foreground,
+    Paint? background,
+    List<ui.Shadow>? shadows,
+    List<ui.FontFeature>? fontFeatures,
+    TextDecoration? decoration,
+    Color? decorationColor,
+    TextDecorationStyle? decorationStyle,
+    double? decorationThickness,
+    String? debugLabel,
+    TextOverflow? overflow,
   }) {
     return AppThemeTextStyle(
       colorScheme,
@@ -339,11 +320,13 @@ class AppThemeTextStyle extends TextStyle {
       decorationColor: decorationColor ?? this.decorationColor,
       decorationStyle: decorationStyle ?? this.decorationStyle,
       decorationThickness: decorationThickness ?? this.decorationThickness,
+      overflow: overflow,
+      debugLabel: debugLabel,
     );
   }
 
   @override
-  AppThemeTextStyle merge(TextStyle other) {
+  AppThemeTextStyle merge(TextStyle? other) {
     final merged = super.merge(other);
 
     return copyWith(

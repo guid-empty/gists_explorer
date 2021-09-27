@@ -1,10 +1,8 @@
-import 'package:meta/meta.dart';
-
 import 'code_line.dart';
 
 class GistDeclaration {
   final String author;
-  final String avatarUrl;
+  final String? avatarUrl;
   final String fileName;
   final String gistId;
   final String timeAgo;
@@ -16,17 +14,17 @@ class GistDeclaration {
   final Iterable<CodeLine> preview;
 
   GistDeclaration({
-    @required this.author,
-    @required this.avatarUrl,
-    @required this.fileName,
-    @required this.gistId,
-    @required this.timeAgo,
-    @required this.gistName,
-    @required this.filesCount,
-    @required this.forksCount,
-    @required this.commentsCount,
-    @required this.starsCount,
-    @required this.preview,
+    required this.author,
+    required this.avatarUrl,
+    required this.fileName,
+    required this.gistId,
+    required this.timeAgo,
+    required this.gistName,
+    required this.filesCount,
+    required this.forksCount,
+    required this.commentsCount,
+    required this.starsCount,
+    required this.preview,
   });
 
   @override

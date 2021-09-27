@@ -1,12 +1,10 @@
-import 'package:flutter/foundation.dart';
-
 class SearchRequest {
   final int currentPage;
-  final String language;
-  final String filename;
+  final String? language;
+  final String? filename;
 
   SearchRequest({
-    @required this.language,
+    required this.language,
     this.currentPage = 0,
     this.filename,
   });

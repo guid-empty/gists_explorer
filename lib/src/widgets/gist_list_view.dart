@@ -30,7 +30,8 @@ class _GistListViewState extends State<GistListView> {
             children: [
               if (gist.avatarUrl?.isNotEmpty ?? false)
                 CircleAvatar(
-                  backgroundImage: NetworkImage(gist.avatarUrl),
+                  foregroundColor: Colors.transparent,
+                  backgroundImage: NetworkImage(gist.avatarUrl!),
                 ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:gists_explorer/src/models/code_line.dart';
 import 'package:gists_explorer/src/models/filter_item.dart';
@@ -9,7 +8,6 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
 
 class GistsApi {
-
   Future<String> getFileData(String path) async {
     return await rootBundle.loadString(path);
   }
@@ -35,13 +33,13 @@ class GistsApi {
   Iterable<FilterItem> _getFilters(Document document) sync* {
     final filtersBlockElement = document.querySelector('ul.filter-list');
     final filterElements =
-        filtersBlockElement.querySelectorAll('li > a.filter-item');
+        filtersBlockElement!.querySelectorAll('li > a.filter-item');
 
     for (final filterElement in filterElements) {
       final language =
-          filterElement.nodes.last.text.trim().replaceAll('\n', '');
+          filterElement.nodes.last.text!.trim().replaceAll('\n', '');
       final countElement = filterElement.querySelector('span.count');
-      final count = countElement.text.trim();
+      final count = countElement!.text.trim();
       yield FilterItem(
         language: language,
         count: count,
@@ -66,9 +64,9 @@ class GistsApi {
     var totalPages = 0;
     var currentPage = 0;
     if (currentPagesCountElement != null) {
-      totalPages =
-          int.tryParse(currentPagesCountElement.attributes['data-total-pages']);
-      currentPage = int.tryParse(currentPagesCountElement.text.trim());
+      totalPages = int.tryParse(
+          currentPagesCountElement.attributes['data-total-pages']!)!;
+      currentPage = int.tryParse(currentPagesCountElement.text.trim())!;
     }
 
     final List<GistDeclaration> gists = [];
@@ -78,16 +76,17 @@ class GistsApi {
       /// meta
       ///
       final metaElement = snippetElement.querySelector('div.gist-snippet-meta');
-      final authorElement = metaElement.querySelector(
+      final authorElement = metaElement!.querySelector(
           'div > div.px-lg-2 > span > a[data-hovercard-type=\'user\']');
-      final author = authorElement.text.trim();
+      final author = authorElement!.text.trim();
       final avatarUrl =
-          metaElement.querySelector('img.avatar-user').attributes['src'];
+          metaElement.querySelector('img.avatar-user')!.attributes['src']!;
       final fileNameElement =
           metaElement.querySelector('strong.css-truncate-target');
-      final fileName = fileNameElement.text.trim();
-      final gistId = fileNameElement.parent.attributes['href'].split('/').last;
-      final timeAgo = metaElement.querySelector('time-ago').text.trim();
+      final fileName = fileNameElement!.text.trim();
+      final gistId =
+          fileNameElement.parent!.attributes['href']!.split('/').last;
+      final timeAgo = metaElement.querySelector('time-ago')!.text.trim();
       final tagElements = metaElement
           .querySelectorAll('ul > li.d-inline-block > a.Link--muted');
       final filesCount = tagElements.first.text.trim();
@@ -105,15 +104,15 @@ class GistsApi {
       ///
       final List<CodeLine> codeLines = [];
       final fileBoxElement = snippetElement.querySelector('div.file-box');
-      final codeTableRowElements = fileBoxElement
+      final codeTableRowElements = fileBoxElement!
           .querySelectorAll('table.js-file-line-container > tbody > tr');
       for (final trElement in codeTableRowElements) {
         final lineNumber = int.tryParse(
           trElement
               .getElementsByTagName('td')
               .first
-              .attributes['data-line-number'],
-        );
+              .attributes['data-line-number']!,
+        )!;
         final codeLine = trElement.getElementsByTagName('td').last.text.trim();
         codeLines.add(CodeLine(lineNumber: lineNumber, loc: codeLine));
       }

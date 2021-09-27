@@ -1,113 +1,204 @@
 import 'package:flutter/material.dart';
 
 abstract class AppThemeColorScheme extends ColorScheme {
-  static const _LightColorScheme light = _LightColorScheme();
-  static const _DarkColorScheme dark = _DarkColorScheme();
+  static _LightColorScheme light = _LightColorScheme();
+  static _DarkColorScheme dark = _DarkColorScheme();
 
-  @override
-  final Color primary;
-  @override
-  final Color primaryVariant;
-  @override
-  final Color secondary;
-  @override
-  final Color surface;
-  @override
-  final Color background;
-  @override
-  final Color error;
+  final _GrayscaleSubColorScheme grayScale;
+  final _ColorFullSubColorScheme colorFull;
+  final _BackgroundSubColorScheme backgroundScheme;
 
-  final Color green;
-  final Color onPrimaryDisabled;
-  final Color onPrimaryHighEmphasis;
-  final Color onPrimaryMediumEmphasis;
-  final Color onSurfaceDisabled;
-  final Color onSurfaceHighEmphasis;
-  final Color onSurfaceMediumEmphasis;
-  final Color outline;
-  final Color surfaceOverlay;
-  final Color uiOverlay;
+  final Brightness _brightness;
 
-  @override
-  final Brightness brightness;
-
-  const AppThemeColorScheme({
-    @required this.primary,
-    @required this.primaryVariant,
-    @required this.secondary,
-    @required this.surface,
-    @required this.background,
-    @required this.error,
-    @required this.brightness,
-    @required this.green,
-    @required this.onPrimaryDisabled,
-    @required this.onPrimaryHighEmphasis,
-    @required this.onPrimaryMediumEmphasis,
-    @required this.onSurfaceDisabled,
-    @required this.onSurfaceHighEmphasis,
-    @required this.onSurfaceMediumEmphasis,
-    @required this.outline,
-    @required this.surfaceOverlay,
-    @required this.uiOverlay,
-  }) : super(
-          primary: primary,
-          primaryVariant: primaryVariant,
-          secondary: secondary,
-          secondaryVariant: secondary,
-          surface: surface,
-          background: background,
-          error: error,
-          onPrimary: onPrimaryHighEmphasis,
-          onSecondary: onPrimaryHighEmphasis,
-          onSurface: onSurfaceHighEmphasis,
-          onBackground: onSurfaceHighEmphasis,
-          onError: onPrimaryHighEmphasis,
+  AppThemeColorScheme({
+    required Color backgroundPrimary,
+    required Color backgroundSecondary,
+    required Color backgroundSecondaryVariant,
+    required Color colorFullSchemePrimary,
+    required Color colorFullSchemeSecondary,
+    required Color colorFullSchemeSuccess,
+    required Color colorFullSchemeWarning,
+    required Color colorFullSchemeOnPrimary,
+    required Color colorFullSchemeOnSecondary,
+    required Color colorFullSchemeOnSuccess,
+    required Color colorFullSchemeOnWarning,
+    required Color grayScaleDark,
+    required Color grayScaleMediumDark,
+    required Color grayScaleMediumLight,
+    required Color grayScaleLight,
+    required Color grayScaleTransparentLight,
+    required Color grayScaleOnDark,
+    required Color grayScaleOnMediumDark,
+    required Brightness brightness,
+  })  : _brightness = brightness,
+        colorFull = _ColorFullSubColorScheme(
+          primary: colorFullSchemePrimary,
+          secondary: colorFullSchemeSecondary,
+          success: colorFullSchemeSuccess,
+          warning: colorFullSchemeWarning,
+          onPrimary: colorFullSchemeOnPrimary,
+          onSecondary: colorFullSchemeOnSecondary,
+          onSuccess: colorFullSchemeOnSuccess,
+          onWarning: colorFullSchemeOnWarning,
+        ),
+        grayScale = _GrayscaleSubColorScheme(
+          dark: grayScaleDark,
+          mediumDark: grayScaleMediumDark,
+          mediumLight: grayScaleMediumLight,
+          light: grayScaleLight,
+          transparentLight: grayScaleTransparentLight,
+          onDark: grayScaleOnDark,
+          onMediumDark: grayScaleOnMediumDark,
+        ),
+        backgroundScheme = _BackgroundSubColorScheme(
+          primary: backgroundPrimary,
+          secondary: backgroundSecondary,
+          secondaryVariant: backgroundSecondaryVariant,
+        ),
+        super(
+          primary: backgroundPrimary,
+          primaryVariant: backgroundPrimary,
+          secondary: backgroundSecondary,
+          secondaryVariant: backgroundSecondary,
+          surface: backgroundPrimary,
+          background: backgroundPrimary,
+          error: colorFullSchemeWarning,
+          onPrimary: grayScaleOnDark,
+          onSecondary: grayScaleOnDark,
+          onSurface: grayScaleOnDark,
+          onBackground: grayScaleOnDark,
+          onError: colorFullSchemeOnWarning,
           brightness: brightness,
         );
+
+  @override
+  Color get background => backgroundScheme.primary;
+  @override
+  Brightness get brightness => _brightness;
+  @override
+  Color get error => colorFull.warning;
+  @override
+  Color get onBackground => grayScale.onDark;
+  @override
+  Color get onError => colorFull.onWarning;
+  @override
+  Color get onPrimary => grayScale.onDark;
+  @override
+  Color get onSecondary => grayScale.onDark;
+  @override
+  Color get onSurface => grayScale.onDark;
+  @override
+  Color get primary => backgroundScheme.primary;
+  @override
+  Color get primaryVariant => backgroundScheme.primary;
+  @override
+  Color get secondary => backgroundScheme.secondary;
+  @override
+  Color get secondaryVariant => backgroundScheme.secondaryVariant;
+  @override
+  Color get surface => backgroundScheme.primary;
+}
+
+class _BackgroundSubColorScheme {
+  final Color primary;
+  final Color secondary;
+  final Color secondaryVariant;
+
+  const _BackgroundSubColorScheme({
+    required this.primary,
+    required this.secondary,
+    required this.secondaryVariant,
+  });
+}
+
+class _ColorFullSubColorScheme {
+  final Color primary;
+  final Color secondary;
+  final Color success;
+  final Color warning;
+  final Color onPrimary;
+  final Color onSecondary;
+  final Color onSuccess;
+  final Color onWarning;
+
+  _ColorFullSubColorScheme({
+    required this.primary,
+    required this.secondary,
+    required this.success,
+    required this.warning,
+    required this.onPrimary,
+    required this.onSecondary,
+    required this.onSuccess,
+    required this.onWarning,
+  });
 }
 
 class _DarkColorScheme extends AppThemeColorScheme {
-  const _DarkColorScheme()
+  _DarkColorScheme()
       : super(
           brightness: Brightness.dark,
-          primary: const Color(0xFF63B0FF),
-          primaryVariant: const Color(0xFF1C48D9),
-          secondary: const Color(0xFFDB7D0A),
-          onPrimaryHighEmphasis: const Color(0xFF000000),
-          background: const Color(0xFF1E2029),
-          error: const Color(0xFFD85A6D),
-          green: const Color(0xFF4DA85F),
-          onPrimaryDisabled: const Color(0x61000000),
-          onPrimaryMediumEmphasis: const Color(0xBD000000),
-          onSurfaceDisabled: const Color(0x61FFFFFF),
-          onSurfaceHighEmphasis: const Color(0xDEFFFFFF),
-          onSurfaceMediumEmphasis: const Color(0x99FFFFFF),
-          outline: const Color(0x1FFFFFFF),
-          surface: const Color(0xFF1E2029),
-          surfaceOverlay: const Color(0x15FFFFFF),
-          uiOverlay: const Color(0x52000000),
+          backgroundPrimary: const Color(0xFF1F1E21),
+          backgroundSecondary: const Color(0xE5242327),
+          backgroundSecondaryVariant: const Color(0xB2151515),
+          colorFullSchemePrimary: const Color(0xFF00A4FF),
+          colorFullSchemeSecondary: const Color(0xFFF2C94C),
+          colorFullSchemeSuccess: const Color(0xFF27AE60),
+          colorFullSchemeWarning: const Color(0xFFEB5757),
+          colorFullSchemeOnPrimary: const Color(0xFFFFFFFF),
+          colorFullSchemeOnSecondary: const Color(0xFF333333),
+          colorFullSchemeOnSuccess: const Color(0xFFFFFFFF),
+          colorFullSchemeOnWarning: const Color(0xFFFFFFFF),
+          grayScaleDark: const Color(0xFF333333),
+          grayScaleMediumDark: const Color(0xFF4F4F4F),
+          grayScaleMediumLight: const Color(0xFF828282),
+          grayScaleLight: const Color(0xFFFFFFFF),
+          grayScaleTransparentLight: const Color(0x19FFFFFF),
+          grayScaleOnDark: const Color(0xFFFFFFFF),
+          grayScaleOnMediumDark: const Color(0xFFFFFFFF),
         );
 }
 
+class _GrayscaleSubColorScheme {
+  final Color dark;
+  final Color mediumDark;
+  final Color mediumLight;
+  final Color light;
+  final Color transparentLight;
+  final Color onDark;
+  final Color onMediumDark;
+
+  const _GrayscaleSubColorScheme({
+    required this.dark,
+    required this.mediumDark,
+    required this.mediumLight,
+    required this.light,
+    required this.transparentLight,
+    required this.onDark,
+    required this.onMediumDark,
+  });
+}
+
 class _LightColorScheme extends AppThemeColorScheme {
-  const _LightColorScheme()
+  _LightColorScheme()
       : super(
-          brightness: Brightness.light,
-          primary: const Color(0xFF1C48D9),
-          primaryVariant: const Color(0xFF0035C2),
-          secondary: const Color(0xFFDB7D0A),
-          onPrimaryHighEmphasis: const Color(0xFFFFFFFF),
-          background: const Color(0xFFFFFFFF),
-          error: const Color(0xFFBB111F),
-          green: const Color(0xFF15892B),
-          onPrimaryDisabled: const Color(0x61FFFFFF),
-          onPrimaryMediumEmphasis: const Color(0xBDFFFFFF),
-          onSurfaceDisabled: const Color(0x61000000),
-          onSurfaceHighEmphasis: const Color(0xDE000000),
-          onSurfaceMediumEmphasis: const Color(0x99000000),
-          outline: const Color(0x1F000000),
-          surface: const Color(0xFFFFFFFF),
-          surfaceOverlay: const Color(0x15242424),
-          uiOverlay: const Color(0x52000000),
+          brightness: Brightness.dark,
+          backgroundPrimary: const Color(0xFF1F1E21),
+          backgroundSecondary: const Color(0xE5242327),
+          backgroundSecondaryVariant: const Color(0xB2151515),
+          colorFullSchemePrimary: const Color(0xFF00A4FF),
+          colorFullSchemeSecondary: const Color(0xFFF2C94C),
+          colorFullSchemeSuccess: const Color(0xFF27AE60),
+          colorFullSchemeWarning: const Color(0xFFEB5757),
+          colorFullSchemeOnPrimary: const Color(0xFFFFFFFF),
+          colorFullSchemeOnSecondary: const Color(0xFF333333),
+          colorFullSchemeOnSuccess: const Color(0xFFFFFFFF),
+          colorFullSchemeOnWarning: const Color(0xFFFFFFFF),
+          grayScaleDark: const Color(0xFF333333),
+          grayScaleMediumDark: const Color(0xFF4F4F4F),
+          grayScaleMediumLight: const Color(0xFF828282),
+          grayScaleLight: const Color(0xFFFFFFFF),
+          grayScaleTransparentLight: const Color(0x19FFFFFF),
+          grayScaleOnDark: const Color(0xFFFFFFFF),
+          grayScaleOnMediumDark: const Color(0xFFFFFFFF),
         );
 }

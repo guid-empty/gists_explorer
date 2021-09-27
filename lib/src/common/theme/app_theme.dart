@@ -5,7 +5,10 @@ import 'package:gists_explorer/src/common/theme/app_theme_color_scheme.dart';
 class AppTheme {
   static Size _screenSize = Size.zero;
 
-  static Iterable<AppTheme> themes = [lightTheme, darkTheme];
+  static Iterable<AppTheme> themes = [
+    lightTheme,
+    darkTheme,
+  ];
 
   static AppTheme darkTheme = _initializeTheme(
     colorScheme: AppThemeColorScheme.dark,
@@ -17,10 +20,10 @@ class AppTheme {
     baseThemeData: ThemeData.light(),
   );
 
-  static const Size defaultSize = Size(360, 720);
+  static const Size defaultSize = Size(375, 812);
 
-  static double _scaleWidth;
-  static double _scaleHeight;
+  static late double _scaleWidth;
+  static late double _scaleHeight;
 
   static double get scaleHeight => _scaleHeight;
   static double get scaleWidth => _scaleWidth;
@@ -30,9 +33,9 @@ class AppTheme {
   final AppThemeColorScheme colors;
 
   AppTheme({
-    @required this.themeData,
-    @required this.textTheme,
-    @required this.colors,
+    required this.themeData,
+    required this.textTheme,
+    required this.colors,
   });
 
   @override
@@ -49,7 +52,7 @@ class AppTheme {
           textTheme == other.textTheme &&
           colors == other.colors;
 
-  static void configure({@required MediaQueryData mediaQueryData}) {
+  static void configure({required MediaQueryData mediaQueryData}) {
     _screenSize = mediaQueryData.size;
     _scaleHeight = _screenSize.height / defaultSize.height;
     _scaleWidth = _screenSize.width / defaultSize.width;
@@ -57,13 +60,13 @@ class AppTheme {
 
   static AppTheme of(BuildContext context) {
     final scope =
-        context.dependOnInheritedWidgetOfExactType<_AppThemeBindingScope>();
+        context.dependOnInheritedWidgetOfExactType<_AppThemeBindingScope>()!;
     return scope.applicationThemeProviderState.currentTheme;
   }
 
   static void toggleTheme(BuildContext context) {
     final scope =
-        context.dependOnInheritedWidgetOfExactType<_AppThemeBindingScope>();
+        context.dependOnInheritedWidgetOfExactType<_AppThemeBindingScope>()!;
 
     final currentTheme = scope.applicationThemeProviderState.currentTheme;
 
@@ -79,100 +82,76 @@ class AppTheme {
     ThemeData baseThemeData,
   ) =>
       baseThemeData.copyWith(
-        primaryColor: colorScheme.primary,
-        backgroundColor: colorScheme.surface,
-        scaffoldBackgroundColor: colorScheme.background,
-        cardColor: colorScheme.background,
-        accentColor: colorScheme.onPrimaryHighEmphasis,
-        buttonColor: colorScheme.onPrimaryHighEmphasis,
+        primaryColor: colorScheme.backgroundScheme.primary,
+        backgroundColor: colorScheme.backgroundScheme.primary,
+        scaffoldBackgroundColor: colorScheme.backgroundScheme.primary,
         colorScheme: colorScheme,
-        errorColor: colorScheme.error,
+        errorColor: colorScheme.colorFull.warning,
         textTheme: textTheme,
         primaryTextTheme: textTheme,
-        accentTextTheme: textTheme,
         appBarTheme: baseThemeData.appBarTheme.copyWith(
-          elevation: 0,
-          color: colorScheme.surface,
+          color: colorScheme.backgroundScheme.primary,
           centerTitle: false,
-          textTheme: textTheme.copyWith(
-            headline6: textTheme.headline6.copyWith(
-              color: colorScheme.onSurfaceHighEmphasis,
-            ),
+          toolbarTextStyle: textTheme.headline1.copyWith(
+            color: colorScheme.grayScale.light,
+          ),
+          titleTextStyle: textTheme.headline1.copyWith(
+            color: colorScheme.grayScale.light,
           ),
           iconTheme: baseThemeData.iconTheme.copyWith(
-            color: colorScheme.onSurfaceMediumEmphasis,
+            color: colorScheme.grayScale.onDark,
           ),
           actionsIconTheme: baseThemeData.iconTheme.copyWith(
-            color: colorScheme.onSurfaceMediumEmphasis,
-          ),
-        ),
-        bottomNavigationBarTheme:
-            baseThemeData.bottomNavigationBarTheme.copyWith(
-          selectedItemColor: colorScheme.primary,
-          unselectedItemColor: colorScheme.onSurfaceMediumEmphasis,
-          elevation: 0,
-          backgroundColor: colorScheme.surface,
-          type: BottomNavigationBarType.fixed,
-          selectedLabelStyle: textTheme.caption1M.primary(),
-          selectedIconTheme: baseThemeData.iconTheme.copyWith(
-            color: colorScheme.primary,
-          ),
-          unselectedLabelStyle: textTheme.caption1M.onSurfaceMediumEmphasis(),
-          unselectedIconTheme: baseThemeData.iconTheme.copyWith(
-            color: colorScheme.onSurfaceMediumEmphasis,
+            color: colorScheme.grayScale.onDark,
           ),
         ),
         buttonTheme: baseThemeData.buttonTheme.copyWith(
           minWidth: 0,
           padding: EdgeInsets.zero,
-          buttonColor: colorScheme.onPrimaryHighEmphasis,
+          buttonColor: colorScheme.grayScale.dark,
           colorScheme: baseThemeData.colorScheme.copyWith(
-            secondary: colorScheme.secondary,
+            secondary: colorScheme.grayScale.dark,
           ),
         ),
         primaryIconTheme: baseThemeData.iconTheme.copyWith(
-          color: colorScheme.onPrimaryHighEmphasis,
+          color: colorScheme.grayScale.onDark,
         ),
         inputDecorationTheme: InputDecorationTheme(
           isDense: true,
-          contentPadding: EdgeInsets.all(_scaleByHeight(16)),
-          errorStyle: textTheme.caption1R.error(),
-          labelStyle: textTheme.bodyText1,
-          hintStyle: textTheme.caption1R,
+          contentPadding: EdgeInsets.symmetric(vertical: _scaleByHeight(12)),
+          errorStyle: textTheme.bodyTextSmallSemibold.colorFullWarning(),
+          labelStyle: textTheme.bodyTextSmallSemibold,
+          hintStyle: textTheme.bodyTextLargeBold,
           border: OutlineInputBorder(
             borderSide: BorderSide(
               width: 1.0,
-              color: colorScheme.outline,
+              color: colorScheme.grayScale.dark,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(_scaleByHeight(8))),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              width: 2.0,
-              color: colorScheme.primary,
+              width: 1.0,
+              color: colorScheme.colorFull.primary.withOpacity(.8),
             ),
-            borderRadius: BorderRadius.all(Radius.circular(_scaleByHeight(8))),
           ),
           errorBorder: OutlineInputBorder(
             borderSide: BorderSide(
               width: 1.0,
-              color: colorScheme.error,
+              color: colorScheme.colorFull.warning,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(_scaleByHeight(8))),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              width: 2.0,
-              color: colorScheme.error,
+              width: 1.0,
+              color: colorScheme.colorFull.warning,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(_scaleByHeight(8))),
           ),
         ),
       );
 
   static AppTheme _initializeTheme({
-    @required AppThemeColorScheme colorScheme,
-    @required ThemeData baseThemeData,
+    required AppThemeColorScheme colorScheme,
+    required ThemeData baseThemeData,
   }) {
     final textTheme = AppTextTheme.byColorScheme(colorScheme);
     return AppTheme(
@@ -193,9 +172,9 @@ class AppThemeProvider extends StatefulWidget {
   final Widget child;
   final AppTheme initialTheme;
 
-  AppThemeProvider({Key key, @required this.initialTheme, @required this.child})
-      : assert(initialTheme != null),
-        super(key: key);
+  const AppThemeProvider(
+      {Key? key, required this.initialTheme, required this.child})
+      : super(key: key);
 
   @override
   _AppThemeProviderState createState() => _AppThemeProviderState();
@@ -204,19 +183,18 @@ class AppThemeProvider extends StatefulWidget {
 class _AppThemeBindingScope extends InheritedWidget {
   final _AppThemeProviderState applicationThemeProviderState;
 
-  _AppThemeBindingScope({
-    Key key,
-    @required this.applicationThemeProviderState,
-    Widget child,
-  })  : assert(applicationThemeProviderState != null),
-        super(key: key, child: child);
+  const _AppThemeBindingScope({
+    Key? key,
+    required this.applicationThemeProviderState,
+    required Widget child,
+  }) : super(key: key, child: child);
 
   @override
   bool updateShouldNotify(_AppThemeBindingScope oldWidget) => true;
 }
 
 class _AppThemeProviderState extends State<AppThemeProvider> {
-  AppTheme currentTheme;
+  late AppTheme currentTheme;
 
   @override
   Widget build(BuildContext context) {
@@ -242,37 +220,49 @@ class _AppThemeProviderState extends State<AppThemeProvider> {
 }
 
 extension AppThemeTextStyleExtensions on AppThemeTextStyle {
-  TextStyle onSurfaceHighEmphasis() =>
-      copyWith(color: colorScheme.onSurfaceHighEmphasis);
+  TextStyle backgroundPrimary() => copyWith(color: colorScheme.primary);
 
-  TextStyle onSurfaceMediumEmphasis() =>
-      copyWith(color: colorScheme.onSurfaceMediumEmphasis);
+  TextStyle backgroundSecondary() => copyWith(color: colorScheme.secondary);
 
-  TextStyle onSurfaceDisabled() =>
-      copyWith(color: colorScheme.onSurfaceDisabled);
+  TextStyle backgroundSecondaryVariant() =>
+      copyWith(color: colorScheme.secondaryVariant);
 
-  TextStyle onPrimaryHighEmphasis() =>
-      copyWith(color: colorScheme.onPrimaryHighEmphasis);
+  TextStyle colorFullWarning() =>
+      copyWith(color: colorScheme.colorFull.warning);
 
-  TextStyle onPrimaryMediumEmphasis() =>
-      copyWith(color: colorScheme.onPrimaryMediumEmphasis);
+  TextStyle colorFullSuccess() =>
+      copyWith(color: colorScheme.colorFull.success);
 
-  TextStyle onPrimaryDisabled() =>
-      copyWith(color: colorScheme.onPrimaryDisabled);
+  TextStyle colorFullPrimary() =>
+      copyWith(color: colorScheme.colorFull.primary);
 
-  TextStyle primary() => copyWith(color: colorScheme.primary);
+  TextStyle colorFullSecondary() =>
+      copyWith(color: colorScheme.colorFull.secondary);
 
-  TextStyle secondary() => copyWith(color: colorScheme.secondary);
+  TextStyle colorFullOnPrimary() => copyWith(color: colorScheme.onPrimary);
 
-  TextStyle error() => copyWith(color: colorScheme.error);
+  TextStyle colorFullOnSecondary() => copyWith(color: colorScheme.onSecondary);
 
-  TextStyle green() => copyWith(color: colorScheme.green);
+  TextStyle colorFullOnBackground() =>
+      copyWith(color: colorScheme.onBackground);
 
-  TextStyle onPrimary() => copyWith(color: colorScheme.onPrimary);
+  TextStyle colorFullOnError() => copyWith(color: colorScheme.onError);
 
-  TextStyle onSecondary() => copyWith(color: colorScheme.onSecondary);
+  TextStyle grayScaleDark() => copyWith(color: colorScheme.grayScale.dark);
 
-  TextStyle onBackground() => copyWith(color: colorScheme.onBackground);
+  TextStyle grayScaleMediumDark() =>
+      copyWith(color: colorScheme.grayScale.mediumDark);
 
-  TextStyle onError() => copyWith(color: colorScheme.onError);
+  TextStyle grayScaleMediumLight() =>
+      copyWith(color: colorScheme.grayScale.mediumLight);
+
+  TextStyle grayScaleLight() => copyWith(color: colorScheme.grayScale.light);
+
+  TextStyle grayScaleTransparentLight() =>
+      copyWith(color: colorScheme.grayScale.transparentLight);
+
+  TextStyle grayScaleOnDark() => copyWith(color: colorScheme.grayScale.onDark);
+
+  TextStyle grayScaleOnMediumDark() =>
+      copyWith(color: colorScheme.grayScale.onMediumDark);
 }
